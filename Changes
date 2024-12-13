@@ -1,4 +1,6 @@
 Revision history for Text::Spintax
 
 {{$NEXT}}
+
+0.1  2024-12-13T12:26:42+01:00
     - Initial version as a Raku Community module
