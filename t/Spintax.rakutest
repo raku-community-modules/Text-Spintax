@@ -1,9 +1,8 @@
 use Test;
-use lib 'lib';
 
-plan 2;
+use Text::Spintax;
 
-use Text::Spintax; pass "Import Text::Spintax";
+plan 1;
 
 {
     my $spintax = Text::Spintax.new;
@@ -22,3 +21,5 @@ use Text::Spintax; pass "Import Text::Spintax";
     );
     is-deeply %outputs, %expected, 'all options reachable';
 }
+
+# vim: expandtab shiftwidth=4

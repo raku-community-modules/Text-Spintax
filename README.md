@@ -1,17 +1,19 @@
+[![Actions Status](https://github.com/raku-community-modules/Text-Spintax/actions/workflows/linux.yml/badge.svg)](https://github.com/raku-community-modules/Text-Spintax/actions) [![Actions Status](https://github.com/raku-community-modules/Text-Spintax/actions/workflows/macos.yml/badge.svg)](https://github.com/raku-community-modules/Text-Spintax/actions) [![Actions Status](https://github.com/raku-community-modules/Text-Spintax/actions/workflows/windows.yml/badge.svg)](https://github.com/raku-community-modules/Text-Spintax/actions)
+
 NAME
 ====
 
-Text::Spintax
+Text::Spintax - A parser and renderer for spintax formatted text
 
 SYNOPSIS
 ========
 
-A parser and renderer for spintax formatted text.
+```raku
+use Text::Spintax;
 
-    use Text::Spintax;
-
-    my $node = Text::Spintax.new.parse('This {is|was|will be} some {varied|random} text');
-    my $text = $node.render;
+my $node = Text::Spintax.new.parse('This {is|was|will be} some {varied|random} text');
+my $text = $node.render;
+```
 
 DESCRIPTION
 ===========
@@ -22,8 +24,8 @@ Text::Spintax implements a parser and renderer for spintax formatted text. Spint
 
 would be rendered as
 
-    * This is a test
-    * This was a test
+    This is a test
+    This was a test
 
 Spintax can be nested indefinitely, for example:
 
@@ -31,28 +33,21 @@ Spintax can be nested indefinitely, for example:
 
 would be rendered as
 
-    * This is nested very deeply.
-    * This is nested quite deeply.
-    * This is nested deep.
+    This is nested very deeply.
+    This is nested quite deeply.
+    This is nested deep.
 
 AUTHOR
 ======
 
-Dale Evans, `<daleevans@github> ` http://devans.mycanadapayday.com
+Dale Evans
 
-BUGS
-====
+COPYRIGHT AND LICENSE
+=====================
 
-Please report any bugs or feature requests at [https://github.com/daleevans/perl6-Text-Spintax/issues](https://github.com/daleevans/perl6-Text-Spintax/issues)
+Copyright 2016 - 2018 Dale Evans
 
-SUPPORT
-=======
+Copyright 2024 Elizabeth Mattijsen
 
-You can find documentation for this module with the p6doc command.
+This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
 
-    p6doc Text::Spintax
-
-class Text::Spintax::Spintax
-----------------------------
-
-a parser and renderer for spintax formatted text built using Perl6 grammar

@@ -1,87 +1,27 @@
-=begin pod
-
-=head1 NAME
-
-Text::Spintax
-
-=head1 SYNOPSIS
-
-A parser and renderer for spintax formatted text.
-
-    use Text::Spintax;
-
-    my $node = Text::Spintax.new.parse('This {is|was|will be} some {varied|random} text');
-    my $text = $node.render;
-
-=head1 DESCRIPTION
-
-Text::Spintax implements a parser and renderer for spintax formatted text. Spintax is a commonly used method for generating "randomized" text. For example,
-
-    This {is|was} a test
-
-would be rendered as
-
-    * This is a test
-    * This was a test
-
-Spintax can be nested indefinitely, for example:
-
-    This is nested {{very|quite} deeply|deep}.
-
-would be rendered as
-
-    * This is nested very deeply.
-    * This is nested quite deeply.
-    * This is nested deep.
-
-=head1 AUTHOR
-
-Dale Evans, C<< <daleevans@github> >> http://devans.mycanadapayday.com
-
-=head1 BUGS
-
-Please report any bugs or feature requests at L<https://github.com/daleevans/perl6-Text-Spintax/issues>
-
-=head1 SUPPORT
-
-You can find documentation for this module with the p6doc command.
-
-    p6doc Text::Spintax
-
-=end pod
-
-class Text::Spintax:ver<0.01>
-{
+class Text::Spintax {
 
     class NullNode {
-        method render {
-            return "";
-        }
+        method render { "" }
     }
 
     class SequenceNode {
         has @.children;
-        method render {
-            return @!children>>.render.join("");
-        }
+        method render { @!children>>.render.join("") }
     }
 
     class TextNode {
         has $.text;
-        method render {
-            return $!text;
-        }
+        method render { $!text }
     }
 
     class SpinNode {
         has @.children;
         method render {
             my @opt_children = @!children[0].children;
-            return @opt_children[@opt_children.elems.rand.truncate].render;
+            @opt_children[@opt_children.elems.rand.truncate].render;
         }
     }
 
-#| a parser and renderer for spintax formatted text built using Perl6 grammar
     grammar Spintax {
         token TOP {
             <sequence>
@@ -159,7 +99,78 @@ class Text::Spintax:ver<0.01>
     method parse ($text) {
         my $actions = Spinaction.new;
         my $match = Spintax.parse($text, :$actions);
-        return $match.ast;
+        $match.ast
     }
-
 }
+
+=begin pod
+
+=head1 NAME
+
+Text::Spintax - A parser and renderer for spintax formatted text
+
+=head1 SYNOPSIS
+
+=begin code :lang<raku>
+
+use Text::Spintax;
+
+my $node = Text::Spintax.new.parse('This {is|was|will be} some {varied|random} text');
+my $text = $node.render;
+
+=end code
+
+=head1 DESCRIPTION
+
+Text::Spintax implements a parser and renderer for spintax formatted
+text. Spintax is a commonly used method for generating "randomized"
+text. For example,
+
+=begin output
+
+This {is|was} a test
+
+=end output
+
+would be rendered as
+
+=begin output
+
+This is a test
+This was a test
+
+=end output
+
+Spintax can be nested indefinitely, for example:
+
+=begin output
+
+This is nested {{very|quite} deeply|deep}.
+
+=end output
+
+would be rendered as
+
+=begin output
+
+This is nested very deeply.
+This is nested quite deeply.
+This is nested deep.
+
+=end output
+
+=head1 AUTHOR
+
+Dale Evans
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2016 - 2018 Dale Evans
+
+Copyright 2024 Elizabeth Mattijsen
+
+This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
+
+=end pod
+
+# vim: expandtab shiftwidth=4
